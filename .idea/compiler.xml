@@ -10,7 +10,9 @@
         </processorPath>
         <module name="Trivago_Kiralama.GatewayServer.main" />
         <module name="Trivago_Kiralama.main" />
+        <module name="Trivago_Kiralama.ElasticService.main" />
         <module name="Trivago_Kiralama.ProductMicroService.main" />
+        <module name="Trivago_Kiralama.Elastic-Service.main" />
         <module name="Trivago_Kiralama.UserMicroService.main" />
         <module name="Trivago_Kiralama.ConfigServerGit.main" />
         <module name="Trivago_Kiralama.AuthMicroService.main" />

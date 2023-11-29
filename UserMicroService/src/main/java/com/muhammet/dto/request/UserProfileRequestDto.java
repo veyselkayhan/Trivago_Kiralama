@@ -1,23 +1,18 @@
-package com.muhammet.repository.entity;
-
+package com.muhammet.dto.request;
 
 import com.muhammet.utility.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
-
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Document
-public class UserProfile implements Serializable {
-    @Id
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class UserProfileRequestDto {
+
     String id;
     Long authId;
     String userName;
@@ -26,5 +21,4 @@ public class UserProfile implements Serializable {
     String photo;
     String phone;
     State state;
-
 }

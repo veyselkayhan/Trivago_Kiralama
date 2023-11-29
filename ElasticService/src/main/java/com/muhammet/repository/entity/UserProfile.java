@@ -1,24 +1,27 @@
 package com.muhammet.repository.entity;
 
-
 import com.muhammet.utility.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.io.Serializable;
-
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Document
-public class UserProfile implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+/**
+ * DİKKAT
+ * camelCase anatasyonunda yazmayınız
+ * userProfile yazılmaz.
+ */
+@Document(indexName = "userprofile")
+public class UserProfile {
     @Id
     String id;
+    String userId;
     Long authId;
     String userName;
     String email;

@@ -1,5 +1,6 @@
 package com.muhammet.mapper;
 
+import com.muhammet.dto.request.UserProfileRequestDto;
 import com.muhammet.dto.request.UserProfileSaveRequestDto;
 import com.muhammet.dto.response.UserProfileResponseDto;
 import com.muhammet.repository.entity.UserProfile;
@@ -14,4 +15,8 @@ public interface UserProfileMapper {
     UserProfile fromDto(final UserProfileSaveRequestDto dto);
 
     UserProfileResponseDto toUserProfileResponseDto(final UserProfile userProfile);
+
+    UserProfile fromUserProfileRequestDto(final UserProfileRequestDto dto);
+
+    UserProfileRequestDto toUserProfileRequestDto(final UserProfile dto);
 }

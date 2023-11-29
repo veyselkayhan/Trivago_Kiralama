@@ -1,0 +1,9 @@
+server:
+  port: 9100
+
+
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    username: admin
+    password: root

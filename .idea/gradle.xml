@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/AuthMicroService" />
             <option value="$PROJECT_DIR$/ConfigServer" />
             <option value="$PROJECT_DIR$/ConfigServerGit" />
+            <option value="$PROJECT_DIR$/Elastic-Service" />
+            <option value="$PROJECT_DIR$/ElasticService" />
             <option value="$PROJECT_DIR$/GatewayServer" />
             <option value="$PROJECT_DIR$/ProductMicroService" />
             <option value="$PROJECT_DIR$/UserMicroService" />
