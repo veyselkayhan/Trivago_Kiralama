@@ -1,0 +1,15 @@
+type UserProfile{
+    id: ID!
+    userId: String
+    authId: Int
+    userName: String
+    email: String
+    name: String
+    photo: String
+}
+
+# Java tarafında sorgu sınıfında tanımlanan methodları burada işliyoruz.
+type Query{
+    findAll: [UserProfile]
+    findById(id: ID!): UserProfile
+}
