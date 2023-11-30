@@ -14,6 +14,10 @@ import com.muhammet.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -103,5 +107,20 @@ public class UserProfileService {
     @Cacheable(value = "UserProfile-findAll")
     public List<UserProfile> getAllUserProfile() {
         return repository.findAll();
+    }
+
+    public Page<UserProfile> findAll(int page, int size, String sortParamater, String sortDirection) {
+        Pageable pageable;
+        if (sortParamater != null && !sortParamater.isEmpty()) {
+            /**
+             * Sıralama için bir nesne yaratmak
+             * Sort nesnesi gerekli.
+             * Sort.Direction -> ASC(a....z,0.....9),DESC(z.........a,9.....0)
+             */
+            Sort sort = Sort.by(Sort.Direction.fromString(sortDirection == null ? "ASC" : sortDirection), sortParamater);
+            pageable = PageRequest.of(page, size, sort);
+        } else
+            pageable = Pageable.ofSize(size).withPage(page);
+        return repository.findAll(pageable);
     }
 }

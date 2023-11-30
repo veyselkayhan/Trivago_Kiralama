@@ -8,6 +8,7 @@ import com.muhammet.repository.entity.UserProfile;
 import com.muhammet.service.UserProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,9 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfileService.updateProfile(dto));
     }
 
-
+    @GetMapping("/find-all-page")
+    public ResponseEntity<Page<UserProfile>> findAll(int page, int size, String sortParamater, String sortDirection){
+        return ResponseEntity.ok(userProfileService.findAll(page,size,sortParamater,sortDirection));
+    }
 
 }

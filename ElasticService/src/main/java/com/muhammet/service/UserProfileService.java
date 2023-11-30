@@ -4,6 +4,10 @@ import com.muhammet.dto.request.UserProfileRequestDto;
 import com.muhammet.mapper.UserProfileMapper;
 import com.muhammet.repository.UserProfileRepository;
 import com.muhammet.repository.entity.UserProfile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -21,14 +25,15 @@ public class UserProfileService {
     }
 
 
-    public void save(UserProfileRequestDto dto){
+    public void save(UserProfileRequestDto dto) {
         userProfileRepository.save(UserProfileMapper.INSTANCE.fromDto(dto));
     }
-    public void update(UserProfileRequestDto dto){
-        Optional<UserProfile> userProfile= userProfileRepository.findOptionalByUserId(dto.getId());
-        if(userProfile.isEmpty()){
+
+    public void update(UserProfileRequestDto dto) {
+        Optional<UserProfile> userProfile = userProfileRepository.findOptionalByUserId(dto.getId());
+        if (userProfile.isEmpty()) {
             userProfileRepository.save(UserProfileMapper.INSTANCE.fromDto(dto));
-        }else{
+        } else {
             UserProfile profile = userProfile.get();
             profile.setPhoto(dto.getPhoto());
             profile.setName(dto.getName());
@@ -46,5 +51,21 @@ public class UserProfileService {
 
     public UserProfile findById(String id) {
         return userProfileRepository.findById(id).orElse(null);
+    }
+
+
+    public Page<UserProfile> findAll(int page, int size, String sortParamater, String sortDirection) {
+        Pageable pageable;
+        if (sortParamater != null && !sortParamater.isEmpty()) {
+            /**
+             * Sıralama için bir nesne yaratmak
+             * Sort nesnesi gerekli.
+             * Sort.Direction -> ASC(a....z,0.....9),DESC(z.........a,9.....0)
+             */
+            Sort sort = Sort.by(Sort.Direction.fromString(sortDirection == null ? "ASC" : sortDirection), sortParamater);
+            pageable = PageRequest.of(page, size, sort);
+        } else
+            pageable = Pageable.ofSize(size).withPage(page);
+        return userProfileRepository.findAll(pageable);
     }
 }

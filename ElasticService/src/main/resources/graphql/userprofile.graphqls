@@ -13,3 +13,15 @@ type Query{
     findAll: [UserProfile]
     findById(id: ID!): UserProfile
 }
+type Mutation {
+    saveUser(input: UserProfileInput): UserProfile
+}
+
+input UserProfileInput{
+    userId: String
+    authId: Int
+    userName: String
+    email: String
+    phone: String
+    photo: String
+}
