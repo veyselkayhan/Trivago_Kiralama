@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
+@Data
 public class UserProfileInput {
     Long authId;
     String name;

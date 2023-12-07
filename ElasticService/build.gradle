@@ -1,0 +1,16 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${versions.springBoot}")
+    }
+}
+
+dependencies {
+    implementation libs.springBootDataElastic
+    implementation libs.springCloudConfigClient
+    implementation libs.springBootSecurity
+//    implementation group: 'com.graphql-java-kickstart', name: 'graphql-spring-boot-starter', version: '15.0.0'
+//    implementation group: 'com.graphql-java-kickstart', name: 'graphiql-spring-boot-starter', version: '11.1.0'
+//    implementation group: 'com.graphql-java-kickstart', name: 'graphql-java-tools', version: '13.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-graphql:3.1.5'
+
+}

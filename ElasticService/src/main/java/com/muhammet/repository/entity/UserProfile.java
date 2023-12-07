@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 /**
- * DİKKAT
- * camelCase anatasyonunda yazmayınız
+ * DİKKATT
+ * camelCase notasyonunda yazmayınız
  * userProfile yazılmaz.
  */
-@Document(indexName = "userprofile")
+@Document(indexName= "userprofile")
 public class UserProfile {
     @Id
     String id;
