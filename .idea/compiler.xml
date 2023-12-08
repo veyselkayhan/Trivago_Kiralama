@@ -15,6 +15,7 @@
         <module name="Trivago_Kiralama.Elastic-Service.main" />
         <module name="Trivago_Kiralama.UserMicroService.main" />
         <module name="Trivago_Kiralama.ConfigServerGit.main" />
+        <module name="Trivago_Kiralama.TestModul.main" />
         <module name="Trivago_Kiralama.AuthMicroService.main" />
         <module name="Trivago_Kiralama.ConfigServer.main" />
       </profile>

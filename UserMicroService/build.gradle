@@ -10,7 +10,4 @@ dependencies {
     implementation libs.springBootAmqp
     implementation libs.springBootDataRedis
     implementation libs.springCloudOpenFeign
-
-
-
 }

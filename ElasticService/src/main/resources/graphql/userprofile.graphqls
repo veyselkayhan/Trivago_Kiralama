@@ -10,10 +10,11 @@ type UserProfile{
 
 # Java tarafında sorgu sınıfında tanımlanan methodları burada işliyoruz.
 type Query{
-    findAll: [UserProfile]
-    findById(id: ID!): UserProfile
+        findAll: [UserProfile]
+        findById(id: ID!): UserProfile
 }
-type Mutation {
+
+type Mutation{
     saveUser(input: UserProfileInput): UserProfile
 }
 
@@ -22,6 +23,7 @@ input UserProfileInput{
     authId: Int
     userName: String
     email: String
-    phone: String
+    name: String
     photo: String
+    phone: String
 }

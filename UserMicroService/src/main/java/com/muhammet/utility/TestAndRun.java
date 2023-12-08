@@ -11,14 +11,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TestAndRun {
 
-    private final UserProfileRepository userProfileRepository;
+    private final UserProfileRepository repository;
     private final ElasticSearchUserProfileManager manager;
-//    @PostConstruct
+    //@PostConstruct
     public void init(){
-        userProfileRepository.findAll().forEach(u->{
-            manager.update(UserProfileMapper.INSTANCE.toUserProfileRequestDto(u));
-            System.out.println("gönderildi...+"+u.getUserName());
-        });
-
+       repository.findAll().forEach(u->{
+           manager.update(UserProfileMapper.INSTANCE.toUserProfileRequestDto(u));
+           System.out.println("gönderildi... "+ u.getUserName());
+       });
     }
 }

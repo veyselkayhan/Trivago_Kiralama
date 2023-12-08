@@ -30,20 +30,16 @@
     --platform linux/amd64 komutu eklenmelidir.
     docker build -t javaboost2/java11boostauthmicroservice:v003 --platform linux/amd64 .
 
-###   DOCKER REDIS KURULUMU
+### DOCKER REDIS KURULUMU
 
     docker run --name lokalredis -d -p 6379:6379 redis:7.2.3-alpine3.18
 
-###   ELASTICSEARCH KURULUMU 
-    
+### DOCKER ELASTICSEARCH KURULUMU
     - xpack.security.enabled=true
 
     - xpack.security.transport.ssl.enabled=true
 
-    docker run -d -p 9200:9200 -p 9300:9300 -e "xpack.security.enabled=false" -e "xpack.security.transport.ssl.enabled=false"  -e "ELASTIC_USERNAME=admin" -e "ELASTIC_PASSWORD=root" -e "ES_JAVA_OPTS=-Xms512m -Xmx1024m" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.7.1    
-
-
-    Bu yeterli olmuyor javanın hip alanınıda girmek gerekiyor.Yoksa rami patlatırız.   
+    docker run -d -p 9200:9200 -p 9300:9300 -e "xpack.security.enabled=false" -e "xpack.security.transport.ssl.enabled=false"  -e "ELASTIC_USERNAME=admin" -e "ELASTIC_PASSWORD=root" -e "ES_JAVA_OPTS=-Xms512m -Xmx1024m" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.7.1
 
 ###   DOCKER DESKTOP ÜZERİNDE UYGULAMALARIMIZI YÜKLEME KOMUTLARI
     Sırası ile lokalde kurulması gerekenler
@@ -52,4 +48,4 @@
     1.1.1 db.createUser({user: "defaultUser",pwd: "bilge!*123",roles: ["readWrite", "dbAdmin"]})
     2- docker run --name postgresdb -e POSTGRES_PASSWORD=root -p 5433:5432 -d postgres
     3- docker run -d --name some-rabbit -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER="BilgeAdmin" -e RABBITMQ_DEFAULT_PASS="Aa123456" rabbitmq:3-management
-    4-
+    

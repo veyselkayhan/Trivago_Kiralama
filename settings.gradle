@@ -5,6 +5,6 @@ include 'ProductMicroService'
 include 'ConfigServer'
 include 'ConfigServerGit'
 include 'GatewayServer'
-include 'Elastic-Service'
 include 'ElasticService'
+include 'TestModul'
 

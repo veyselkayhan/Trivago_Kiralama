@@ -12,4 +12,5 @@ public interface UserProfileRepository extends MongoRepository<UserProfile,Strin
     Optional<UserProfile> findOptionalByAuthId(Long id);
 
     List<UserProfile> findAllByUserNameContaining(String userName, Pageable pageable);
+
 }

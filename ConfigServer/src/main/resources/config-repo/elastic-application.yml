@@ -4,11 +4,11 @@ server:
 spring:
   security:
     user:
-      name: veysel
+      name: muhammet
       password: 123456
   graphql:
-    graphiql:
-      enabled: true
+   graphiql:
+     enabled: true
   elasticsearch:
     uris: http://localhost:9200
     username: admin

@@ -32,9 +32,9 @@ public class UserProfileService {
     private final JwtTokenManager jwtTokenManager;
     private final CacheManager cacheManager;
     private final ElasticSearchUserProfileManager manager;
-    public UserProfile save(UserProfileSaveRequestDto dto) {
+    public UserProfile save(UserProfileSaveRequestDto dto){
         UserProfile result = repository.save(UserProfileMapper.INSTANCE.fromDto(dto));
-        Objects.requireNonNull(cacheManager.getCache("UserProfile-findAll")).clear();
+        Objects.requireNonNull(cacheManager.getCache("userprofilefindall")).clear();
         manager.save(UserProfileMapper.INSTANCE.toUserProfileRequestDto(result));
         return result;
 //        return repository.save(UserProfile.builder()
@@ -43,28 +43,26 @@ public class UserProfileService {
 //                .build());
     }
 
-
-
     public UserProfileResponseDto getProfileByToken(GetProfileByTokenRequestDto dto) {
         /**
          * Kullanıcı token bilgisini gönderiyor, jwtManager ile token bilgisini doğruluyor ve içinden
          * kişinin authId bilgisini almaya çalışıyoruz.
          */
         Optional<Long> authId = jwtTokenManager.getIdByToken(dto.getToken());
-        if (authId.isEmpty())
+        if(authId.isEmpty())
             throw new UserException(ErrorType.INVALID_TOKEN);
         Optional<UserProfile> userProfile = repository.findOptionalByAuthId(authId.get());
-        if (userProfile.isEmpty())
+        if(userProfile.isEmpty())
             throw new UserException(ErrorType.USER_NOT_FOUND);
         return UserProfileMapper.INSTANCE.toUserProfileResponseDto(userProfile.get());
     }
 
     public Boolean updateProfile(UpdateProfiliRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.getIdByToken(dto.getToken());
-        if (authId.isEmpty())
+        if(authId.isEmpty())
             throw new UserException(ErrorType.INVALID_TOKEN);
         Optional<UserProfile> userProfile = repository.findOptionalByAuthId(authId.get());
-        if (userProfile.isEmpty())
+        if(userProfile.isEmpty())
             throw new UserException(ErrorType.USER_NOT_FOUND);
         UserProfile updateProfile = userProfile.get();
         updateProfile.setName(dto.getName());
@@ -72,55 +70,66 @@ public class UserProfileService {
         updateProfile.setPhoto(dto.getPhoto());
         updateProfile.setPhone(dto.getPhone());
         repository.save(updateProfile);
-        Objects.requireNonNull(cacheManager.getCache("UserProfile-findAll")).clear();
+        Objects.requireNonNull(cacheManager.getCache("userprofilefindall")).clear();
         manager.update(UserProfileMapper.INSTANCE.toUserProfileRequestDto(updateProfile));
         return true;
     }
 
     /**
-     * Burada method icin bir cache olusturup bunun redis tarafından kayıt edilmesini sağlayacağız.
-     * redis bu methodu şu şekilde kayıt edecek.
-     * KEY                      VALUE
+     * Burada method için ir cache oluşturup bunun redis tarafından kayıt edilmesini sağlayacağınz.
+     * redis bu methodu şu şekilde kayıt edecek;
+     *  KEY                     VALUE
      * getUpperName:muhammet -> MUHAMMET
      * getUpperName:canan    -> CANAN
-     * @param username
+     * @param userName
      * @return
      */
-
-
     @Cacheable(value = "getuppername")
-    public String getUpperName(String username) {
-        String result = username.toUpperCase();
-        try {
+    public String getUpperName(String userName){
+        String result = userName.toUpperCase();
+        try{
             Thread.sleep(4000L);
-        } catch (Exception exception) {
-            System.out.println("Hata Olustu");
-            return "Error : " + exception;
+        }catch (Exception exception){
+            System.out.println("Hata oldu");
+            return "Error...: "+ exception;
         }
         return result;
     }
 
     public void clearKey(String key){
-       Objects.requireNonNull(cacheManager.getCache("getuppername")).evict(key);
+        Objects.requireNonNull(cacheManager.getCache("getuppername")).evict(key);
     }
 
-    @Cacheable(value = "UserProfile-findAll")
+    @Cacheable(value = "userprofilefindall")
     public List<UserProfile> getAllUserProfile() {
         return repository.findAll();
     }
 
-    public Page<UserProfile> findAll(int page, int size, String sortParamater, String sortDirection) {
+
+    /***
+     *
+     * @param page -> Hangi sayfayı görmek istediğinizi belirtir.
+     * @param size -> bir sayfada kaç kayıt görmek istediğinizi belirtir.
+     * @param sortParameter -> hangi parametreye göre sıralama yapmak istediğinizi belirtir. (ad, id, userName)
+     * @param sortDirection -> sıralama yönünü belirtir. (ASC, DESC)
+     * @return
+     */
+    public Page<UserProfile> findAll(int page, int size, String sortParameter, String sortDirection){
         Pageable pageable;
-        if (sortParamater != null && !sortParamater.isEmpty()) {
+        if(sortParameter !=null && !sortParameter.isEmpty()){
             /**
-             * Sıralama için bir nesne yaratmak
-             * Sort nesnesi gerekli.
-             * Sort.Direction -> ASC(a....z,0.....9),DESC(z.........a,9.....0)
+             * Sıralama için bir nesne yaratmak,
+             * Sort nesnesi gerekli,
+             * Sort.Direction -> ASC(a...z, 0...9), DESC(z...a, 9...0)
              */
-            Sort sort = Sort.by(Sort.Direction.fromString(sortDirection == null ? "ASC" : sortDirection), sortParamater);
+            Sort sort =  Sort.by(Sort.Direction.fromString(sortDirection == null ? "ASC" : sortDirection), sortParameter);
             pageable = PageRequest.of(page, size, sort);
-        } else
+
+        }else
             pageable = Pageable.ofSize(size).withPage(page);
+
         return repository.findAll(pageable);
     }
+
+
 }

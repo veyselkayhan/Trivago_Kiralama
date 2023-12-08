@@ -17,6 +17,5 @@ public interface UserProfileMapper {
     UserProfileResponseDto toUserProfileResponseDto(final UserProfile userProfile);
 
     UserProfile fromUserProfileRequestDto(final UserProfileRequestDto dto);
-
-    UserProfileRequestDto toUserProfileRequestDto(final UserProfile dto);
+    UserProfileRequestDto toUserProfileRequestDto(final UserProfile userProfile);
 }

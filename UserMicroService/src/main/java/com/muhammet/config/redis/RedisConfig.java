@@ -12,13 +12,14 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableRedisRepositories
 @EnableCaching
 public class RedisConfig {
+
     @Value("${usermicroservice.redis.host}")
     private String host;
-
     @Value("${usermicroservice.redis.port}")
     private int port;
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory(){
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host,port));
+    public LettuceConnectionFactory redisConnectionFactory() {
+
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
     }
 }
